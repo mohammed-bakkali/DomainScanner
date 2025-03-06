@@ -119,8 +119,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="🔍 Comprehensive tool for domain and DNS record searches")
     parser.add_argument("--search", type=str, help="🔹 Search for domains by extension (e.g., .com)")
     parser.add_argument("--all", action="store_true", help="🔹 Automatically run DNS analysis and subdomain search after domain search")
+    parser.add_argument("--dns", type=str, help="🔹 Check DNS records for a specific domain")
 
+    # Parsing the arguments
     args = parser.parse_args()
+
+    if args.dns:
+        print(f"\n🔍 Checking DNS records for {args.dns}...\n")
+        records = check_dns(args.dns)
+        for record, values in records.items():
+            print(f"{record}: {', '.join(values) if values else 'None'}")
 
     if args.search:
         found_domains = search_domains_by_extension(args.search)
